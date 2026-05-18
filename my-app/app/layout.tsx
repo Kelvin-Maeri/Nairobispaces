@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quicksand, Raleway } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -29,7 +30,8 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${raleway.variable} font-body bg-page text-dark antialiased`}
       >
-        {children}
+        <Navbar />
+        <main>{children}</main>
       </body>
     </html>
   );
