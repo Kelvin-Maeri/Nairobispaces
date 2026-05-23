@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${quicksand.variable} ${raleway.variable} font-body bg-page text-dark antialiased`}
+        className={`${quicksand.variable} ${raleway.variable} font-body bg-white text-dark antialiased`}
       >
         <Navbar />
         <main>{children}</main>

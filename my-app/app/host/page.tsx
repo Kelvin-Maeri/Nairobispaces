@@ -3,34 +3,10 @@
 import { useState } from "react";
 
 const stats = [
-  {
-    label: "THIS MONTH",
-    value: "Ksh 87,500",
-    trend: "+18% vs last",
-    trendType: "up",
-    icon: "📈",
-  },
-  {
-    label: "BOOKINGS",
-    value: "12",
-    trend: "3 upcoming",
-    trendType: "neutral",
-    icon: "📅",
-  },
-  {
-    label: "PAYOUT PENDING",
-    value: "Ksh 19,500",
-    trend: "Releases May 14",
-    trendType: "neutral",
-    icon: "💳",
-  },
-  {
-    label: "AVG. RATING",
-    value: "4.92",
-    trend: "from 184 stays",
-    trendType: "neutral",
-    icon: "⭐",
-  },
+  { label: "THIS MONTH", value: "Ksh 87,500", trend: "+18% vs last", trendType: "up", icon: "📈" },
+  { label: "BOOKINGS", value: "12", trend: "3 upcoming", trendType: "neutral", icon: "📅" },
+  { label: "PAYOUT PENDING", value: "Ksh 19,500", trend: "Releases May 14", trendType: "neutral", icon: "💳" },
+  { label: "AVG. RATING", value: "4.92", trend: "from 184 stays", trendType: "neutral", icon: "⭐" },
 ];
 
 const listings = [
@@ -84,148 +60,168 @@ const bookings = [
   },
 ];
 
+const tabs = ["Bookings", "Calendar", "Listings", "Reports", "Settings"];
+
 export default function HostPage() {
   const [activeTab, setActiveTab] = useState("Bookings");
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-page dark:bg-dark">
 
-      {/* Host navbar */}
+      {/* Host sub-navbar */}
       <div className="bg-dark border-b border-white/10 px-6 h-[58px] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-brand rounded-sm flex items-center justify-center">
             <span className="font-display font-bold text-lg text-white">N</span>
           </div>
           <span className="font-display font-bold text-base text-white tracking-wide">
-            NAIROBI SPACES{" "}
-            <span className="text-xs font-medium text-dark-4 ml-1">Host</span>
+            NAIROBI SPACES <span className="text-xs font-medium text-dark-4 ml-1">Host</span>
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <button className="font-display text-sm font-bold text-white border border-dark-6 rounded-full px-4 py-2">
+          <button className="font-display text-sm font-bold text-white border border-white/30 rounded-full px-4 py-2">
             View as guest
           </button>
-          <button className="font-display text-sm font-bold text-white bg-brand rounded-full px-4 py-2">
+          <button className="font-display text-sm font-bold text-dark bg-white rounded-full px-4 py-2">
             + Add new listing
           </button>
         </div>
       </div>
 
       {/* Hero */}
-      <div className="px-6 pt-8 pb-6">
-        <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">
-          Host Dashboard
-        </p>
-        <h1 className="font-display text-4xl font-bold text-white mb-1">
-          Karibu, Mary 👋
-        </h1>
-        <p className="text-dark-5 text-sm">
-          Westlands Skyline Loft · 1 active listing
-        </p>
+      <div className="bg-dark border-b border-white/10 px-6 pt-6 pb-5 flex items-center justify-between">
+        <div>
+          <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">
+            Host Dashboard
+          </p>
+          <h1 className="font-display text-4xl font-bold text-white mb-1">
+            Karibu, Mary 👋
+          </h1>
+          <p className="text-dark-5 text-sm">
+            Westlands Skyline Loft · 1 active listing
+          </p>
+        </div>
       </div>
 
-      {/* Stats row */}
-      <div className="px-6 grid grid-cols-4 gap-4 mb-8">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-dark-2 rounded-lg p-5 border border-white/10"
+      {/* Tabs */}
+      <div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6 flex gap-6">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`font-display text-sm font-semibold py-4 border-b-2 transition-colors ${
+              activeTab === tab
+                ? "border-brand text-brand"
+                : "border-transparent text-dark-4 hover:text-dark dark:hover:text-white"
+            }`}
           >
-            <div className="flex items-center justify-between mb-3">
-              <p className="font-display text-xs font-bold uppercase tracking-widest text-dark-5">
-                {stat.label}
-              </p>
-              <span className="text-brand text-base">{stat.icon}</span>
-            </div>
-            <p className="font-display text-3xl font-bold text-white mb-1">
-              {stat.value}
-            </p>
-            <p className={`text-xs font-medium ${stat.trendType === "up" ? "text-brand" : "text-dark-5"}`}>
-              {stat.trend}
-            </p>
-          </div>
+            {tab}
+          </button>
         ))}
       </div>
 
-      {/* My listings */}
-      <div className="px-6 mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-display text-lg font-bold text-white">My listings</h2>
-          <button className="font-display text-sm font-bold text-brand">+ Upload new</button>
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          {listings.map((listing) => (
-            <div key={listing.name} className="bg-dark-2 rounded-lg border border-white/10 overflow-hidden">
-              <div className="h-40 relative overflow-hidden">
-                <img
-                  src={listing.image}
-                  alt={listing.name}
-                  className="w-full h-full object-cover"
-                />
-                <span className={`absolute top-3 left-3 text-xs font-display font-bold px-2 py-1 rounded-full ${
-                  listing.statusType === "live"
-                    ? "bg-success-bg text-success-ink"
-                    : "bg-pending-bg text-pending-ink"
-                }`}>
-                  {listing.status}
-                </span>
+      {/* Stats row */}
+      <div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6 py-5">
+        <div className="grid grid-cols-4 gap-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-dark-8 dark:bg-dark-3 rounded-lg p-5">
+              <div className="flex items-center justify-between mb-3">
+                <p className="font-display text-xs font-bold uppercase tracking-widest text-dark-4 dark:text-dark-5">
+                  {stat.label}
+                </p>
+                <span className="text-brand text-base">{stat.icon}</span>
               </div>
-              <div className="p-4">
-                <p className="font-display font-bold text-white text-sm mb-1">{listing.name}</p>
-                <p className="text-dark-5 text-xs mb-2">📍 {listing.location}</p>
-                {listing.price ? (
-                  <div className="flex items-center justify-between">
-                    <p className="font-display font-bold text-white text-sm">{listing.price}</p>
-                    <button className="text-brand text-xs font-bold font-display">View</button>
-                  </div>
-                ) : (
-                  <p className="text-dark-5 text-xs">{listing.sub}</p>
-                )}
-              </div>
+              <p className="font-display text-2xl font-bold text-dark dark:text-white mb-1">
+                {stat.value}
+              </p>
+              <p className={`text-xs font-medium ${stat.trendType === "up" ? "text-brand" : "text-dark-4 dark:text-dark-5"}`}>
+                {stat.trend}
+              </p>
             </div>
           ))}
-
-          {/* Upload new card */}
-          <div className="bg-dark-2 rounded-lg border border-dashed border-dark-5 flex flex-col items-center justify-center h-48 cursor-pointer hover:border-brand transition-colors">
-            <span className="text-dark-5 text-3xl mb-2">+</span>
-            <p className="font-display font-bold text-dark-5 text-sm">Upload new listing</p>
-            <p className="text-dark-5 text-xs mt-1">Photos, location, rules & payout</p>
-          </div>
         </div>
       </div>
 
-      {/* Upcoming bookings */}
-      <div className="px-6 mb-10">
-        <h2 className="font-display text-lg font-bold text-white mb-4">Upcoming bookings</h2>
-        <div className="flex flex-col gap-3">
-          {bookings.map((booking) => (
-            <div key={booking.name} className="bg-dark-2 rounded-lg border border-white/10 p-4 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-dark-3 flex items-center justify-center font-display font-bold text-white text-sm flex-shrink-0">
-                {booking.initials}
-              </div>
-              <div className="flex-1">
-                <p className="font-display font-bold text-white text-sm">{booking.name}</p>
-                <p className="text-dark-5 text-xs">{booking.listing}</p>
-                <p className="text-dark-5 text-xs">{booking.dates}</p>
-                {booking.payout && (
-                  <span className="inline-block mt-1 bg-success-bg text-success-ink text-xs font-bold font-display px-3 py-1 rounded-full">
-                    {booking.payout}
+      {/* Body */}
+      <div className="px-6 py-6">
+
+        {/* My listings */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-lg font-bold text-dark dark:text-white">My listings</h2>
+            <button className="font-display text-sm font-bold text-brand">+ Upload new</button>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {listings.map((listing) => (
+              <div key={listing.name} className="bg-white dark:bg-dark-2 rounded-lg border border-dark-7 dark:border-white/10 overflow-hidden">
+                <div className="h-40 relative overflow-hidden">
+                  <img src={listing.image} alt={listing.name} className="w-full h-full object-cover" />
+                  <span className={`absolute top-3 left-3 text-xs font-display font-bold px-2 py-1 rounded-full ${
+                    listing.statusType === "live"
+                      ? "bg-success-bg text-success-ink"
+                      : "bg-pending-bg text-pending-ink"
+                  }`}>
+                    {listing.status}
                   </span>
-                )}
+                </div>
+                <div className="p-4">
+                  <p className="font-display font-bold text-dark dark:text-white text-sm mb-1">{listing.name}</p>
+                  <p className="text-dark-4 dark:text-dark-5 text-xs mb-2">📍 {listing.location}</p>
+                  {listing.price ? (
+                    <div className="flex items-center justify-between">
+                      <p className="font-display font-bold text-dark dark:text-white text-sm">{listing.price}</p>
+                      <button className="text-brand text-xs font-bold font-display">View</button>
+                    </div>
+                  ) : (
+                    <p className="text-dark-4 dark:text-dark-5 text-xs">{listing.sub}</p>
+                  )}
+                </div>
               </div>
-              <div className="text-right">
-                <p className="font-display font-bold text-white text-sm">{booking.amount}</p>
-                <p className="text-dark-5 text-xs">{booking.status}</p>
-              </div>
+            ))}
+
+            {/* Upload new card */}
+            <div className="bg-white dark:bg-dark-2 rounded-lg border border-dashed border-dark-5 flex flex-col items-center justify-center h-48 cursor-pointer hover:border-brand transition-colors">
+              <span className="text-dark-5 text-3xl mb-2">+</span>
+              <p className="font-display font-bold text-dark-4 dark:text-dark-5 text-sm">Upload new listing</p>
+              <p className="text-dark-4 dark:text-dark-5 text-xs mt-1">Photos, location, rules & payout</p>
             </div>
-          ))}
+          </div>
         </div>
+
+        {/* Upcoming bookings */}
+        <div className="mb-10">
+          <h2 className="font-display text-lg font-bold text-dark dark:text-white mb-4">Upcoming bookings</h2>
+          <div className="flex flex-col gap-3">
+            {bookings.map((booking) => (
+              <div key={booking.name} className="bg-white dark:bg-dark-2 rounded-lg border border-dark-7 dark:border-white/10 p-4 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-dark-7 dark:bg-dark-3 flex items-center justify-center font-display font-bold text-dark dark:text-white text-sm flex-shrink-0">
+                  {booking.initials}
+                </div>
+                <div className="flex-1">
+                  <p className="font-display font-bold text-dark dark:text-white text-sm">{booking.name}</p>
+                  <p className="text-dark-4 dark:text-dark-5 text-xs">{booking.listing}</p>
+                  <p className="text-dark-4 dark:text-dark-5 text-xs">{booking.dates}</p>
+                  {booking.payout && (
+                    <span className="inline-block mt-1 bg-success-bg text-success-ink text-xs font-bold font-display px-3 py-1 rounded-full">
+                      {booking.payout}
+                    </span>
+                  )}
+                </div>
+                <div className="text-right">
+                  <p className="font-display font-bold text-dark dark:text-white text-sm">{booking.amount}</p>
+                  <p className="text-dark-4 dark:text-dark-5 text-xs">{booking.status}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/10 px-6 py-4 flex items-center justify-between">
-        <p className="text-dark-5 text-xs">© 2026 Nairobi Spaces · Mogoa Labs · Prototype simulation</p>
-        <div className="flex gap-4 text-dark-5 text-xs">
+      <div className="border-t border-dark-7 dark:border-white/10 px-6 py-4 flex items-center justify-between">
+        <p className="text-dark-4 dark:text-dark-5 text-xs">© 2026 Nairobi Spaces · Mogoa Labs · Prototype simulation</p>
+        <div className="flex gap-4 text-dark-4 dark:text-dark-5 text-xs">
           <span>About</span>
           <span>Help</span>
           <span>Trust & Safety</span>
