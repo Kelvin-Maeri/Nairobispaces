@@ -1,12 +1,12 @@
 "use client";
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Legend,
+  CartesianGrid,
 } from "recharts";
 
 import { useState } from "react";
@@ -71,13 +71,13 @@ const bookings = [
 
 const tabs = ["Bookings", "Calendar", "Listings", "Reports", "Settings"];
 const chartData = [
-  { day: "M", income: 0, payouts: 0 },
-  { day: "T", income: 12000, payouts: 9000 },
-  { day: "W", income: 8000, payouts: 6000 },
-  { day: "T", income: 18000, payouts: 13000 },
-  { day: "F", income: 9500, payouts: 7000 },
-  { day: "S", income: 22000, payouts: 16000 },
-  { day: "S", income: 14000, payouts: 10000 },
+  { day: "M", income: 6800, payouts: 3500 },
+  { day: "T", income: 7200, payouts: 4000 },
+  { day: "W", income: 6500, payouts: 3200 },
+  { day: "T", income: 9000, payouts: 5500 },
+  { day: "F", income: 10500, payouts: 7000 },
+  { day: "S", income: 14000, payouts: 9500 },
+  { day: "S", income: 10000, payouts: 6800 },
 ];
 
 export default function HostPage() {
@@ -180,35 +180,62 @@ export default function HostPage() {
     </div>
   </div>
   <p className="text-xs text-dark-4 dark:text-dark-5 mb-4">Income vs payouts (KSh)</p>
-  <ResponsiveContainer width="100%" height={160}>
-    <BarChart data={chartData} barGap={2} barCategoryGap="30%">
-      <XAxis
-        dataKey="day"
-        tick={{ fontSize: 11, fontFamily: "Quicksand", fill: "#AAAAAA" }}
-        axisLine={false}
-        tickLine={false}
-      />
-      <YAxis
-        tick={{ fontSize: 10, fontFamily: "Quicksand", fill: "#AAAAAA" }}
-        axisLine={false}
-        tickLine={false}
-        tickFormatter={(v) => `${v / 1000}k`}
-      />
-      <Tooltip
-        formatter={(value: number) => [`KSh ${value.toLocaleString()}`, ""]}
-        contentStyle={{
-          background: "#222",
-          border: "none",
-          borderRadius: 8,
-          fontSize: 12,
-          fontFamily: "Quicksand",
-          color: "#fff",
-        }}
-      />
-      <Bar dataKey="income" fill="#E35336" radius={[4, 4, 0, 0]} />
-      <Bar dataKey="payouts" fill="#F4B3A3" radius={[4, 4, 0, 0]} />
-    </BarChart>
-  </ResponsiveContainer>
+  <ResponsiveContainer width="100%" height={180}>
+  <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+    <defs>
+      <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stopColor="#E35336" stopOpacity={0.5} />
+        <stop offset="95%" stopColor="#E35336" stopOpacity={0.05} />
+      </linearGradient>
+      <linearGradient id="payoutGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stopColor="#F4B3A3" stopOpacity={0.4} />
+        <stop offset="95%" stopColor="#F4B3A3" stopOpacity={0.05} />
+      </linearGradient>
+    </defs>
+    <CartesianGrid
+      strokeDasharray="3 3"
+     stroke="rgba(0,0,0,0.08)"
+      vertical={false}
+    />
+    <XAxis
+      dataKey="day"
+      tick={{ fontSize: 11, fontFamily: "Quicksand", fill: "#777" }}
+      axisLine={false}
+      tickLine={false}
+    />
+    <YAxis
+      tick={{ fontSize: 10, fontFamily: "Quicksand", fill: "#777" }}
+      axisLine={false}
+      tickLine={false}
+      tickFormatter={(v) => `${v / 1000}k`}
+    />
+    <Tooltip
+      formatter={(value: number) => [`KSh ${value.toLocaleString()}`, ""]}
+      contentStyle={{
+        background: "#222",
+        border: "none",
+        borderRadius: 8,
+        fontSize: 12,
+        fontFamily: "Quicksand",
+        color: "#fff",
+      }}
+    />
+    <Area
+      type="monotone"
+      dataKey="income"
+      stroke="#E35336"
+      strokeWidth={2}
+      fill="url(#incomeGrad)"
+    />
+    <Area
+      type="monotone"
+      dataKey="payouts"
+      stroke="#F4B3A3"
+      strokeWidth={2}
+      fill="url(#payoutGrad)"
+    />
+  </AreaChart>
+</ResponsiveContainer>
 </div>
 
         {/* My listings */}
