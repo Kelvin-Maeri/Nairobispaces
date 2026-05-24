@@ -1,4 +1,13 @@
 "use client";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 import { useState } from "react";
 
@@ -61,6 +70,15 @@ const bookings = [
 ];
 
 const tabs = ["Bookings", "Calendar", "Listings", "Reports", "Settings"];
+const chartData = [
+  { day: "M", income: 0, payouts: 0 },
+  { day: "T", income: 12000, payouts: 9000 },
+  { day: "W", income: 8000, payouts: 6000 },
+  { day: "T", income: 18000, payouts: 13000 },
+  { day: "F", income: 9500, payouts: 7000 },
+  { day: "S", income: 22000, payouts: 16000 },
+  { day: "S", income: 14000, payouts: 10000 },
+];
 
 export default function HostPage() {
   const [activeTab, setActiveTab] = useState("Bookings");
@@ -144,6 +162,54 @@ export default function HostPage() {
 
       {/* Body */}
       <div className="px-6 py-6">
+        {/* Earnings chart */}
+<div className="mb-8 bg-white dark:bg-dark-2 rounded-lg border border-dark-7 dark:border-white/10 p-6">
+  <div className="flex items-center justify-between mb-1">
+    <h2 className="font-display text-base font-bold text-dark dark:text-white">
+      Earnings this week
+    </h2>
+    <div className="flex items-center gap-4">
+      <span className="flex items-center gap-1.5 text-xs text-dark-4 dark:text-dark-5">
+        <span className="w-2.5 h-2.5 rounded-sm bg-brand inline-block" />
+        Income
+      </span>
+      <span className="flex items-center gap-1.5 text-xs text-dark-4 dark:text-dark-5">
+        <span className="w-2.5 h-2.5 rounded-sm bg-brand/30 inline-block" />
+        Payouts
+      </span>
+    </div>
+  </div>
+  <p className="text-xs text-dark-4 dark:text-dark-5 mb-4">Income vs payouts (KSh)</p>
+  <ResponsiveContainer width="100%" height={160}>
+    <BarChart data={chartData} barGap={2} barCategoryGap="30%">
+      <XAxis
+        dataKey="day"
+        tick={{ fontSize: 11, fontFamily: "Quicksand", fill: "#AAAAAA" }}
+        axisLine={false}
+        tickLine={false}
+      />
+      <YAxis
+        tick={{ fontSize: 10, fontFamily: "Quicksand", fill: "#AAAAAA" }}
+        axisLine={false}
+        tickLine={false}
+        tickFormatter={(v) => `${v / 1000}k`}
+      />
+      <Tooltip
+        formatter={(value: number) => [`KSh ${value.toLocaleString()}`, ""]}
+        contentStyle={{
+          background: "#222",
+          border: "none",
+          borderRadius: 8,
+          fontSize: 12,
+          fontFamily: "Quicksand",
+          color: "#fff",
+        }}
+      />
+      <Bar dataKey="income" fill="#E35336" radius={[4, 4, 0, 0]} />
+      <Bar dataKey="payouts" fill="#F4B3A3" radius={[4, 4, 0, 0]} />
+    </BarChart>
+  </ResponsiveContainer>
+</div>
 
         {/* My listings */}
         <div className="mb-8">
