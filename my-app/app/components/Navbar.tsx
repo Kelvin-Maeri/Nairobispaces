@@ -38,7 +38,7 @@ const toggleTheme = () => {
   }
 };
   return (
-    <nav className="bg-white dark:bg-dark border-b border-dark-7 dark:border-white/10 px-6 h-[58px] flex items-center justify-between gap-4">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-dark border-b border-dark-7 dark:border-white/10 px-6 h-[58px] flex items-center justify-between gap-4">
 
       {/* Logo */}
       <div className="flex items-center gap-3 flex-shrink-0">

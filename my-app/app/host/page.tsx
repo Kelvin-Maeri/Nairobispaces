@@ -79,6 +79,121 @@ const chartData = [
   { day: "S", income: 14000, payouts: 9500 },
   { day: "S", income: 10000, payouts: 6800 },
 ];
+const BOOKED: Record<string, number[]> = {
+  "2026-4": [9,10,11,14,15,16,17,22,23,24,27,28,29,30],
+  "2026-5": [3,4,5,11,12,13],
+};
+
+function CalendarSection() {
+  const [baseMonth, setBaseMonth] = useState(4); // 0-indexed, 4 = May
+  const [baseYear, setBaseYear] = useState(2026);
+
+  const months = [
+    { month: baseMonth, year: baseYear },
+    { month: baseMonth + 1 > 11 ? 0 : baseMonth + 1, year: baseMonth + 1 > 11 ? baseYear + 1 : baseYear },
+  ];
+
+  const prev = () => {
+    if (baseMonth === 0) { setBaseMonth(11); setBaseYear(y => y - 1); }
+    else setBaseMonth(m => m - 1);
+  };
+
+  const next = () => {
+    if (baseMonth === 11) { setBaseMonth(0); setBaseYear(y => y + 1); }
+    else setBaseMonth(m => m + 1);
+  };
+
+  return (
+    <div className="mb-8 bg-white dark:bg-dark-2 rounded-lg border border-dark-7 dark:border-white/10 p-6">
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center gap-2">
+          <span className="text-brand text-sm">📅</span>
+          <h2 className="font-display text-base font-bold text-dark dark:text-white">
+            Availability calendar
+          </h2>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1.5 text-xs text-dark-4 dark:text-dark-5">
+            <span className="w-3 h-3 rounded-sm bg-[#3D1A14] inline-block" />
+            Booked
+          </span>
+          <span className="flex items-center gap-1.5 text-xs text-dark-4 dark:text-dark-5">
+            <span className="w-3 h-3 rounded-sm bg-dark-7 dark:bg-dark-4 inline-block" />
+            Available
+          </span>
+        </div>
+      </div>
+      <p className="text-xs text-dark-4 dark:text-dark-5 mb-5">
+        Dates blocked out are confirmed bookings approved by ops.
+      </p>
+
+      <div className="flex items-start justify-center gap-2">
+        {/* Left arrow */}
+        <button onClick={prev} className="mt-2 w-7 h-7 flex items-center justify-center text-dark-4 dark:text-dark-5 hover:text-dark dark:hover:text-white text-lg font-bold">
+          ‹
+        </button>
+
+        {/* Two calendars */}
+        <div className="flex gap-8">
+          {months.map(({ month, year }) => {
+            const monthName = new Date(year, month, 1).toLocaleString("default", { month: "long", year: "numeric" });
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            const booked = BOOKED[`${year}-${month}`] || [];
+            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+return (
+              <div key={`${year}-${month}`} className="w-[220px] bg-dark-8 dark:bg-black rounded-lg p-3">
+                <p className="font-display text-xs font-bold text-dark dark:text-white text-center mb-3">
+                  {monthName}
+                </p>
+                <div className="grid grid-cols-7 gap-0.5 text-center mb-1">
+                  {["Su","Mo","Tu","We","Th","Fr","Sa"].map((d) => (
+                    <div key={d} className="font-display text-[10px] font-bold text-dark-4 dark:text-dark-5 py-1">
+                      {d}
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-7 gap-0.5 text-center">
+                  {Array(totalCells).fill(null).map((_, i) => {
+                    const dayNum = i - firstDay + 1;
+                    const isCurrentMonth = dayNum >= 1 && dayNum <= daysInMonth;
+                    const isBooked = isCurrentMonth && booked.includes(dayNum);
+                    const displayNum = isCurrentMonth
+                      ? dayNum
+                      : dayNum < 1
+                      ? prevMonthDays + dayNum
+                      : dayNum - daysInMonth;
+
+                    return (
+                      <div
+                        key={i}
+                        className={`font-display text-[11px] font-semibold py-1.5 rounded-md cursor-pointer transition-colors ${
+                          !isCurrentMonth
+                            ? "text-dark-6 dark:text-dark-4"
+                            : isBooked
+                           ? "bg-brand-light dark:bg-[#3D1A14] text-brand dark:text-[#C84B2F]"
+                            : "text-dark-2 dark:text-dark-5 hover:bg-dark-8 dark:hover:bg-dark-3"
+                        }`}
+                      >
+                        {displayNum}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Right arrow */}
+        <button onClick={next} className="mt-2 w-7 h-7 flex items-center justify-center text-dark-4 dark:text-dark-5 hover:text-dark dark:hover:text-white text-lg font-bold">
+          ›
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function HostPage() {
   const [activeTab, setActiveTab] = useState("Bookings");
@@ -86,61 +201,55 @@ export default function HostPage() {
   return (
     <div className="min-h-screen bg-page dark:bg-dark">
 
-      {/* Host sub-navbar */}
-      <div className="bg-dark border-b border-white/10 px-6 h-[58px] flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-brand rounded-sm flex items-center justify-center">
-            <span className="font-display font-bold text-lg text-white">N</span>
+      
+
+     {/* Hero */}
+      <div className="bg-dark border-b border-white/10 px-6 pt-6 pb-5">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <div>
+            <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">
+              Host Dashboard
+            </p>
+            <h1 className="font-display text-3xl font-bold text-white mb-1">
+              Karibu, Mary 👋
+            </h1>
+            <p className="text-dark-5 text-sm">
+              Westlands Skyline Loft · 1 active listing
+            </p>
           </div>
-          <span className="font-display font-bold text-base text-white tracking-wide">
-            NAIROBI SPACES <span className="text-xs font-medium text-dark-4 ml-1">Host</span>
-          </span>
+          <div className="flex items-center gap-3">
+            <button className="font-display text-sm font-bold text-white border border-white/30 rounded-full px-4 py-2 flex items-center gap-2">
+              👤 View as guest
+            </button>
+            <button className="font-display text-sm font-bold text-dark bg-white rounded-full px-4 py-2">
+              + Add new listing
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="font-display text-sm font-bold text-white border border-white/30 rounded-full px-4 py-2">
-            View as guest
-          </button>
-          <button className="font-display text-sm font-bold text-dark bg-white rounded-full px-4 py-2">
-            + Add new listing
-          </button>
-        </div>
-      </div>
+      </div> 
 
-      {/* Hero */}
-      <div className="bg-dark border-b border-white/10 px-6 pt-6 pb-5 flex items-center justify-between">
-        <div>
-          <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">
-            Host Dashboard
-          </p>
-          <h1 className="font-display text-4xl font-bold text-white mb-1">
-            Karibu, Mary 👋
-          </h1>
-          <p className="text-dark-5 text-sm">
-            Westlands Skyline Loft · 1 active listing
-          </p>
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6 flex gap-6">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`font-display text-sm font-semibold py-4 border-b-2 transition-colors ${
-              activeTab === tab
-                ? "border-brand text-brand"
-                : "border-transparent text-dark-4 hover:text-dark dark:hover:text-white"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+     {/* Tabs */}
+<div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6">
+  <div className="max-w-5xl mx-auto flex gap-6">
+    {tabs.map((tab) => (
+      <button
+        key={tab}
+        onClick={() => setActiveTab(tab)}
+        className={`font-display text-sm font-semibold py-4 border-b-2 transition-colors ${
+          activeTab === tab
+            ? "border-brand text-brand"
+            : "border-transparent text-dark-4 hover:text-dark dark:hover:text-white"
+        }`}
+      >
+        {tab}
+      </button>
+    ))}
+  </div>
+</div> 
 
       {/* Stats row */}
       <div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6 py-5">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-4 gap-4">
           {stats.map((stat) => (
             <div key={stat.label} className="bg-dark-8 dark:bg-dark-3 rounded-lg p-5">
               <div className="flex items-center justify-between mb-3">
@@ -161,7 +270,7 @@ export default function HostPage() {
       </div>
 
       {/* Body */}
-      <div className="px-6 py-6">
+      <div className="max-w-5xl mx-auto px-6 py-6">
         {/* Earnings chart */}
 <div className="mb-8 bg-white dark:bg-dark-2 rounded-lg border border-dark-7 dark:border-white/10 p-6">
   <div className="flex items-center justify-between mb-1">
@@ -237,6 +346,9 @@ export default function HostPage() {
   </AreaChart>
 </ResponsiveContainer>
 </div>
+{/* Availability calendar */}
+<CalendarSection />
+
 
         {/* My listings */}
         <div className="mb-8">

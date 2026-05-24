@@ -30,8 +30,8 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${raleway.variable} font-body bg-white text-dark antialiased`}
       >
-        <Navbar />
-        <main>{children}</main>
+       <Navbar />
+<main className="overflow-y-auto">{children}</main> 
       </body>
     </html>
   );

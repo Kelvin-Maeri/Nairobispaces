@@ -22,3 +22,6 @@
     text-wrap: balance;
   }
 }
+html, body {
+  height: 100%;
+}
