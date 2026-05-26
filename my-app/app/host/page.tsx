@@ -204,29 +204,29 @@ export default function HostPage() {
       
 
      {/* Hero */}
-      <div className="bg-dark border-b border-white/10 px-6 pt-6 pb-5">
+      <div className="bg-white border-b border-dark-7 px-6 pt-6 pb-5">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div>
             <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">
               Host Dashboard
             </p>
-            <h1 className="font-display text-3xl font-bold text-white mb-1">
+            <h1 className="font-display text-3xl font-bold text-dark mb-1">
               Karibu, Mary 👋
             </h1>
-            <p className="text-dark-5 text-sm">
+            <p className="text-dark-4 text-sm">
               Westlands Skyline Loft · 1 active listing
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="font-display text-sm font-bold text-white border border-white/30 rounded-full px-4 py-2 flex items-center gap-2">
+            <button className="font-display text-sm font-bold text-dark border border-dark-6 rounded-full px-4 py-2 flex items-center gap-2 hover:border-dark-3 transition-colors">
               👤 View as guest
             </button>
-            <button className="font-display text-sm font-bold text-dark bg-white rounded-full px-4 py-2">
+            <button className="font-display text-sm font-bold text-white bg-dark rounded-full px-4 py-2 hover:bg-dark-2 transition-colors">
               + Add new listing
             </button>
           </div>
         </div>
-      </div> 
+      </div>
 
      {/* Tabs */}
 <div className="bg-white dark:bg-dark-2 border-b border-dark-7 dark:border-white/10 px-6">
