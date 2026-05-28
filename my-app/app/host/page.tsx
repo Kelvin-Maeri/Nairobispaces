@@ -151,12 +151,12 @@ export default function HostPage() {
     <div className="min-h-screen bg-[#F5F4F2] dark:bg-[#0f0f0f]">
 
       {/* ── Hero ── */}
-      <div className="max-w-7xl mx-auto px-8 pt-8 pb-4">
-        <p className="font-display text-xs font-bold uppercase tracking-widest text-brand mb-2">Host dashboard</p>
+      <div className="max-w-6xl mx-auto px-8 pt-8 pb-4">
+        <p className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-brand mb-2">Host dashboard</p>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="font-display text-4xl font-bold text-[#222] dark:text-white mb-1">Karibu, Mary 👋</h1>
-            <p className="text-[#777] dark:text-[#aaa] text-sm">Westlands Skyline Loft · 1 active listing</p>
+          <h1 className="font-display text-[32px] font-bold text-[#222] dark:text-white mb-1 leading-tight">Karibu, Mary 👋</h1>  
+         <p className="font-body text-[13px] font-medium text-[#777] dark:text-[#aaa]">Westlands Skyline Loft · 1 active listing</p>   
           </div>
           <div className="flex items-center gap-3 mt-1">
             <button className="font-display text-sm font-bold text-[#222] dark:text-white border border-[#ccc] dark:border-white/20 rounded-full px-5 py-2 hover:border-[#888] transition-colors flex items-center gap-2">
@@ -170,31 +170,31 @@ export default function HostPage() {
       </div>
 
       {/* ── Stats ── */}
-      <div className="max-w-7xl mx-auto px-8 py-4">
+      <div className="max-w-6xl mx-auto px-8 py-4">
 
         <div className="grid grid-cols-4 gap-4">
           {stats.map(s => (
             <div key={s.label} className="bg-white dark:bg-[#1c1c1c] border border-[#e5e5e5] dark:border-[#2a2a2a] rounded-2xl p-5">
               <div className="flex items-center justify-between mb-4">
-                <p className="font-display text-xs font-bold uppercase tracking-widest text-[#777] dark:text-[#aaa]">{s.label}</p>
+                <p className="font-display text-[10px] font-bold uppercase tracking-[0.08em] text-[#777] dark:text-[#aaa]">{s.label}</p>
                 <span className="text-brand text-base">{s.icon}</span>
               </div>
-              <p className="font-display text-2xl font-bold text-[#222] dark:text-white mb-1">{s.value}</p>
-              <p className={`text-xs font-medium ${s.trendUp ? "text-brand" : "text-[#777] dark:text-[#aaa]"}`}>{s.trend}</p>
+              <p className="font-display text-[22px] font-bold text-[#222] dark:text-white mb-1">{s.value}</p>
+            <p className={`font-body text-[12px] font-medium ${s.trendUp ? "text-brand" : "text-[#777] dark:text-[#aaa]"}`}>{s.trend}</p>  
             </div>
           ))}
         </div>
       </div>
 
       {/* ── Body ── */}
-     <div className="max-w-7xl mx-auto px-8 pb-12">
+     <div className="max-w-6xl mx-auto px-8 pb-12">
 
         {/* Earnings chart */}
         <div className="mb-4 bg-white dark:bg-[#1c1c1c] border border-[#e5e5e5] dark:border-[#2a2a2a] rounded-2xl p-6">
           <div className="flex items-center justify-between mb-1">
             <div>
-              <h2 className="font-display text-base font-bold text-[#222] dark:text-white">Earnings this week</h2>
-              <p className="text-xs text-[#777] dark:text-[#aaa] mt-0.5">Income vs payouts (KSh)</p>
+              <h2 className="font-display text-[15px] font-700 text-[#222] dark:text-white">Earnings this week</h2>
+<p className="font-body text-[12px] font-medium text-[#777] dark:text-[#aaa] mt-0.5">Income vs payouts (KSh)</p>
             </div>
             <div className="flex items-center gap-4 text-xs text-[#777] dark:text-[#aaa]">
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-brand inline-block"/>Income</span>
@@ -234,7 +234,7 @@ export default function HostPage() {
         {/* My listings */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display text-lg font-bold text-[#222] dark:text-white">My listings</h2>
+          <h2 className="font-display text-[16px] font-bold text-[#222] dark:text-white">My listings</h2>  
             <button className="font-display text-sm font-bold text-brand hover:text-brand-dark transition-colors">+ Upload new</button>
           </div>
           <div className="grid grid-cols-3 gap-4">
@@ -272,7 +272,7 @@ export default function HostPage() {
 
         {/* Upcoming bookings */}
         <div className="mb-6">
-          <h2 className="font-display text-lg font-bold text-[#222] dark:text-white mb-4">Upcoming bookings</h2>
+          <h2 className="font-display text-[16px] font-bold text-[#222] dark:text-white mb-4">Upcoming bookings</h2>
           <div className="flex flex-col gap-3">
             {bookings.map(b => (
               <div key={b.name} className="bg-white dark:bg-[#1c1c1c] border border-[#e5e5e5] dark:border-[#2a2a2a] rounded-2xl p-4 flex items-center gap-4">
@@ -280,9 +280,9 @@ export default function HostPage() {
                   {b.initials}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-display font-bold text-[#222] dark:text-white text-sm">{b.name}</p>
-                  <p className="text-[#777] dark:text-[#aaa] text-xs">{b.listing}</p>
-                  <p className="text-[#777] dark:text-[#aaa] text-xs">{b.dates}</p>
+                  <p className="font-display font-bold text-[#222] dark:text-white text-[14px]">{b.name}</p>
+<p className="font-body text-[12px] font-medium text-[#777] dark:text-[#aaa]">{b.listing}</p>
+<p className="font-body text-[12px] font-medium text-[#777] dark:text-[#aaa]">{b.dates}</p>
                   {b.payout && (
                     <span className="inline-block mt-1 bg-[#E8F5E9] text-[#2E7D32] text-xs font-bold font-display px-3 py-1 rounded-full">
                       {b.payout}
@@ -302,7 +302,7 @@ export default function HostPage() {
 
       {/* ── Footer ── */}
       <div className="border-t border-[#e5e5e5] dark:border-[#2a2a2a] py-5">
-      <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-8 flex items-center justify-between">
           <div className="flex gap-6 text-xs text-[#777] dark:text-[#aaa]">
             <span>Guest</span><span>Host</span><span>Ops</span><span>Admin</span>
           </div>
