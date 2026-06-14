@@ -474,10 +474,10 @@ export default function HostPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.12)" vertical={false} />
               <XAxis dataKey="day" tick={{ fontSize:11, fontFamily:"Quicksand", fontWeight:700, fill:"#AAAAAA" }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize:10, fontFamily:"Quicksand", fill:"#AAAAAA" }} axisLine={false} tickLine={false} tickFormatter={v => `${v/1000}k`} />
-              <Tooltip
-                formatter={(value: number) => [`KSh ${value.toLocaleString()}`, ""]}
-                contentStyle={{ background:"#1c1c1c", border:"1px solid #2a2a2a", borderRadius:10, fontSize:12, fontFamily:"Quicksand", color:"#fff" }}
-              />
+           <Tooltip
+ formatter={(value: unknown) => [`KSh ${Number(value).toLocaleString()}`, ""]}
+  contentStyle={{ background:"#1c1c1c", border:"1px solid #2a2a2a", borderRadius:10, fontSize:12, fontFamily:"Quicksand", color:"#fff" }}
+/>
               <Area type="monotone" dataKey="income"  stroke="#E35336" strokeWidth={2} fill="url(#incomeGrad)" />
               <Area type="monotone" dataKey="payouts" stroke="#F4B3A3" strokeWidth={2} fill="url(#payoutGrad)" />
             </AreaChart>
