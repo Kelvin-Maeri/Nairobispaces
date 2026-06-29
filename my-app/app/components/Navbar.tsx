@@ -140,9 +140,12 @@ export default function Navbar() {
         </button>
 
         {/* Sign in */}
-        <button className="font-display text-[13px] font-bold text-white bg-brand rounded-full px-4 py-2 hover:bg-brand-dark transition-colors tracking-[0.3px]">
+        <Link
+          href="/login"
+          className="font-display text-[13px] font-bold text-white bg-brand rounded-full px-4 py-2 hover:bg-brand-dark transition-colors tracking-[0.3px]"
+        >
           Sign in
-        </button>
+        </Link>
 
       </div>
     </nav>
